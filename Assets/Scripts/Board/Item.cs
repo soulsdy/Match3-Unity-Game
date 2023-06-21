@@ -14,20 +14,17 @@ public class Item
 
     public virtual void SetView()
     {
-        string prefabname = GetPrefabName();
+        int prefabname = GetPrefabIndex();
 
-        if (!string.IsNullOrEmpty(prefabname))
-        {
-            GameObject prefab = Resources.Load<GameObject>(prefabname);
-            if (prefab)
-            {
-                View = GameObject.Instantiate(prefab).transform;
-            }
-        }
+        GameObject tmp = GameObject.Instantiate(GameData.GetItem());
+        View = tmp.transform;
+        tmp.GetComponent<SpriteRenderer>().sprite = GameData.GetTileData().GetSprite(prefabname);
+
+
     }
 
-    protected virtual string GetPrefabName() { return string.Empty; }
-
+    protected virtual int GetPrefabIndex() { return 0; }
+    protected virtual string GetPrefabName() { return null; }
     public virtual void SetCell(Cell cell)
     {
         Cell = cell;
