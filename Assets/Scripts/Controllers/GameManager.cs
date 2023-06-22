@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         State = eStateGame.SETUP;
-
+        GameData.LoadData();
         m_gameSettings = Resources.Load<GameSettings>(Constants.GAME_SETTINGS_PATH);
 
         m_uiMenu = FindObjectOfType<UIMainManager>();
