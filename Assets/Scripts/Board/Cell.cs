@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class Cell : MonoBehaviour
 {
@@ -53,7 +54,30 @@ public class Cell : MonoBehaviour
             Item.ShowAppearAnimation();
         }
     }
+    public List<NormalItem.eNormalType> GetItemTypesInNeibour()
+    {
+        List<NormalItem.eNormalType> types = new List<NormalItem.eNormalType>();
+        if (!IsNullOrEmpty(NeighbourBottom))
+            types.Add(GetItemType(NeighbourBottom));
+        if (!IsNullOrEmpty(NeighbourLeft))
+            types.Add(GetItemType(NeighbourLeft));
+        if (!IsNullOrEmpty(NeighbourRight))
+            types.Add(GetItemType(NeighbourRight));
+        if (!IsNullOrEmpty(NeighbourUp))
+            types.Add(GetItemType(NeighbourUp));
+        return types;
+    }
+    NormalItem.eNormalType GetItemType(Cell cell)
+    {
+        NormalItem normarlItem = cell.Item as NormalItem;
+        return normarlItem.ItemType;
+    }
+    bool IsNullOrEmpty(Cell cell)
+    {
+        if (cell == null || cell.Item == null) return true;
+        return false;
 
+    }
     internal void Clear()
     {
         if (Item != null)

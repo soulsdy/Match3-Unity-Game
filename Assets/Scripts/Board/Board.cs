@@ -144,10 +144,11 @@ public class Board
             {
                 Cell cell = m_cells[x, y];
                 if (!cell.IsEmpty) continue;
-
+                List<NormalItem.eNormalType> types = cell.GetItemTypesInNeibour();
+                
                 NormalItem item = new NormalItem();
 
-                item.SetType(Utils.GetRandomNormalType());
+                item.SetType(Utils.GetRandomNormalTypeExcept(types.ToArray()));
                 item.SetView();
                 item.SetViewRoot(m_root);
 
