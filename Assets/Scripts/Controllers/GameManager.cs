@@ -44,6 +44,7 @@ public class GameManager : MonoBehaviour
     private UIMainManager m_uiMenu;
 
     private LevelCondition m_levelCondition;
+    eLevelMode currentMode;
 
     private void Awake()
     {
@@ -71,7 +72,7 @@ public class GameManager : MonoBehaviour
     {
         State = state;
 
-        if(State == eStateGame.PAUSE)
+        if (State == eStateGame.PAUSE)
         {
             DOTween.PauseAll();
         }
@@ -83,6 +84,7 @@ public class GameManager : MonoBehaviour
 
     public void LoadLevel(eLevelMode mode)
     {
+        currentMode = mode;
         m_boardController = new GameObject("BoardController").AddComponent<BoardController>();
         m_boardController.StartGame(this, m_gameSettings);
 
@@ -106,7 +108,17 @@ public class GameManager : MonoBehaviour
     {
         StartCoroutine(WaitBoardController());
     }
-
+    public void RestartGame()
+    {
+        if (m_levelCondition != null)
+        {
+            m_levelCondition.ConditionCompleteEvent -= GameOver;
+            Destroy(m_levelCondition);
+            m_levelCondition = null;
+        }
+        ClearLevel();
+        LoadLevel(currentMode);
+    }
     internal void ClearLevel()
     {
         if (m_boardController)

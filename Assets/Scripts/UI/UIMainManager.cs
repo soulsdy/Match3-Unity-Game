@@ -103,7 +103,9 @@ public class UIMainManager : MonoBehaviour
     {
         m_gameManager.SetState(GameManager.eStateGame.PAUSE);
     }
-
+    internal void RestartGame(){
+        m_gameManager.RestartGame();
+    }
     internal void LoadLevelMoves()
     {
         m_gameManager.LoadLevel(GameManager.eLevelMode.MOVES);
