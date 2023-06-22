@@ -24,32 +24,6 @@ public class NormalItem : Item
 
     protected override int GetPrefabIndex()
     {
-       // int prefabname = 0;
-        // switch (ItemType)
-        // {
-        //     case eNormalType.TYPE_ONE:
-        //         prefabname = 0;
-        //         break;
-        //     case eNormalType.TYPE_TWO:
-        //         prefabname = 1;
-        //         break;
-        //     case eNormalType.TYPE_THREE:
-        //         prefabname = 2;
-        //         break;
-        //     case eNormalType.TYPE_FOUR:
-        //         prefabname = 3;
-        //         break;
-        //     case eNormalType.TYPE_FIVE:
-        //         prefabname = 4;
-        //         break;
-        //     case eNormalType.TYPE_SIX:
-        //         prefabname = 5;
-        //         break;
-        //     case eNormalType.TYPE_SEVEN:
-        //         prefabname = 6;
-        //         break;
-        // }
-
         return (int)ItemType;
     }
 

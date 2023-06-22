@@ -15,8 +15,9 @@ public class Item
     public virtual void SetView()
     {
         int prefabname = GetPrefabIndex();
-
-        GameObject tmp = GameObject.Instantiate(GameData.GetItem());
+        GameObject tmp =SimplePool.Spawn(GameData.GetItem(),Vector3.zero,Quaternion.identity);
+        tmp.transform.localScale=Vector3.one;
+      //  GameObject tmp = GameObject.Instantiate(GameData.GetItem());
         View = tmp.transform;
         tmp.GetComponent<SpriteRenderer>().sprite = GameData.GetTileData().GetSprite(prefabname);
 
@@ -98,7 +99,7 @@ public class Item
             View.DOScale(0.1f, 0.1f).OnComplete(
                 () =>
                 {
-                    GameObject.Destroy(View.gameObject);
+                    SimplePool.Despawn(View.gameObject);
                     View = null;
                 }
                 );
@@ -129,7 +130,7 @@ public class Item
 
         if (View)
         {
-            GameObject.Destroy(View.gameObject);
+            SimplePool.Despawn(View.gameObject);
             View = null;
         }
     }
