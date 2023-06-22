@@ -318,6 +318,8 @@ public class Board
 
     internal List<Cell> FindFirstMatch()
     {
+        if (m_cells == null)
+            return null;
         List<Cell> list = new List<Cell>();
 
         for (int x = 0; x < boardSizeX; x++)
@@ -327,14 +329,14 @@ public class Board
                 Cell cell = m_cells[x, y];
 
                 var listhor = GetHorizontalMatches(cell);
-                if (listhor.Count >= m_matchMin)
+                if (listhor.Count >= m_matchMin && listhor != null)
                 {
                     list = listhor;
                     break;
                 }
 
                 var listvert = GetVerticalMatches(cell);
-                if (listvert.Count >= m_matchMin)
+                if (listvert.Count >= m_matchMin && listvert != null)
                 {
                     list = listvert;
                     break;
@@ -350,7 +352,7 @@ public class Board
         var dir = GetMatchDirection(matches);
 
         var bonus = matches.Where(x => x.Item is BonusItem).FirstOrDefault();
-        if(bonus == null)
+        if (bonus == null)
         {
             return matches;
         }

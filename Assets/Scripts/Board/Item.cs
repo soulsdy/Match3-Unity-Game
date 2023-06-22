@@ -15,9 +15,9 @@ public class Item
     public virtual void SetView()
     {
         int prefabname = GetPrefabIndex();
-        GameObject tmp =SimplePool.Spawn(GameData.GetItem(),Vector3.zero,Quaternion.identity);
-        tmp.transform.localScale=Vector3.one;
-      //  GameObject tmp = GameObject.Instantiate(GameData.GetItem());
+        GameObject tmp = SimplePool.Spawn(GameData.GetItem(), Vector3.zero, Quaternion.identity);
+        tmp.transform.localScale = Vector3.one;
+        //  GameObject tmp = GameObject.Instantiate(GameData.GetItem());
         View = tmp.transform;
         tmp.GetComponent<SpriteRenderer>().sprite = GameData.GetTileData().GetSprite(prefabname);
 
@@ -96,13 +96,26 @@ public class Item
     {
         if (View)
         {
-            View.DOScale(0.1f, 0.1f).OnComplete(
-                () =>
-                {
-                    SimplePool.Despawn(View.gameObject);
-                    View = null;
-                }
-                );
+            Sequence se = DOTween.Sequence();
+            se.AppendCallback(() =>
+            {
+                View.DOLocalMoveY(0.5f, 0.2f).SetRelative(true);
+                View.DOScale(1.2f, 0.2f);
+            });
+            se.AppendInterval(0.2f);
+            se.AppendCallback(() =>
+            {
+                View.DOLocalMoveY(-3.5f, 0.5f).SetRelative(true);
+                View.DOScale(0.3f, 0.5f);
+            });
+             se.AppendInterval(0.5f);
+            se.AppendCallback(() =>
+            {
+                SimplePool.Despawn(View.gameObject);
+                View = null;
+            });
+            se.Play();
+
         }
     }
 
